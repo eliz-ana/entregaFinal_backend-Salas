@@ -1,0 +1,85 @@
+# 🛒 Segunda Entrega - Backend con WebSockets y Handlebars
+
+## 📌 Descripción
+
+Este proyecto es una aplicación backend construida con **Node.js**, **Express**, **Handlebars** y **Socket.io**, que permite:
+
+- Gestionar productos y carritos (alta, baja, modificación, consulta).
+- Visualizar productos en tiempo real mediante una vista dinámica que se actualiza automáticamente con WebSockets.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- Node.js
+- Express
+- File System (persistencia en archivos)
+- Express Handlebars (motor de plantillas)
+- Socket.io (comunicación en tiempo real)
+- Postman (para pruebas de endpoints)
+
+---
+
+## 📁 Estructura del proyecto
+
+src/
+├── app.js
+├── routes/
+│ ├── products.router.js
+│ └── carts.router.js
+├── managers/
+│ ├── productManager.js
+│ └── cartManager.js
+├── views/
+│ ├── home.handlebars
+│ ├── realTimeProducts.handlebars
+│ └── layouts/
+│ └── main.handlebars
+└── public/
+└── js/
+└── realTimeClient.js
+products.json
+carts.json
+
+---
+
+---
+
+## 🖥️ Vistas disponibles
+
+### `/`
+🔸 Vista estática con listado de productos desde File System (home.handlebars)
+
+### `/realtimeproducts`
+🔸 Vista dinámica que se actualiza automáticamente al agregar o eliminar productos mediante WebSocket (realTimeProducts.handlebars)
+
+- Formulario para **agregar** productos (title, price)
+- Formulario para **eliminar** productos por ID
+
+---
+
+## 🔌 Funcionalidades WebSocket
+
+- Cuando un usuario agrega un producto nuevo → todos los clientes conectados ven el cambio al instante.
+- Cuando un usuario elimina un producto por ID → se actualiza en tiempo real para todos los clientes.
+
+---
+
+## 📬 API REST (pruebas con Postman)
+
+### Productos (`/api/products`)
+
+- `GET /` → Obtener todos los productos
+- `GET /:pid` → Obtener producto por ID
+- `POST /` → Agregar producto (requiere todos los campos)
+- `PUT /:pid` → Modificar producto por ID
+- `DELETE /:pid` → Eliminar producto por ID
+
+### Carritos (`/api/carts`)
+
+- `POST /` → Crear carrito
+- `GET /:cid` → Ver contenido del carrito
+- `POST /:cid/product/:pid` → Agregar producto al carrito
+
+---
+
