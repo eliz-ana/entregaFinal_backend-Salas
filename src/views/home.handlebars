@@ -10,9 +10,10 @@
       <form action="/api/carts/{{../cartId}}/product/{{this._id}}" method="POST" style="display:inline;">
         <button type="submit">Agregar al carrito 🛒</button>
       </form>
+      <a href="/products/{{this._id}}">Ver detalles</a>
     </li>
   {{/each}}
 </ul>
 
 <br>
-<a href="/carts/{{cartId}}">Ver Carrito</a>
+<a href="/cart/{{cartId}}">Ver Carrito</a>

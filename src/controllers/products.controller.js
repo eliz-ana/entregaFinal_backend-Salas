@@ -1,11 +1,48 @@
 import Product from "../models/product.model.js";
+import Cart from "../models/cart.model.js";
 
 // Obtener todos los productos
 // 🔹 API: devuelve JSON
 export const getProductsApi = async (req, res) => {
   try {
-    const products = await Product.find(); // No uso lean() porque no es para HBS
-    res.json(products);
+    // Query params con valores por defecto
+    const { limit = 10, page = 1, sort, query } = req.query;
+
+    // Filtro
+    let filter = {};
+    if (query) {
+      const [field, value] = query.split(":");
+      // Si el valor es un número, lo busca como número
+      if (!isNaN(value)) {
+        filter[field] = Number(value);
+      } else {
+        // Si es texto, usa regex insensible a mayúsculas/minúsculas
+        filter[field] = { $regex: value, $options: "i" };
+      }
+    }
+
+    // Opciones de paginación
+    const options = {
+      limit: parseInt(limit),
+      page: parseInt(page),
+      sort: sort ? { price: sort === "asc" ? 1 : -1 } : undefined,
+      lean: true, // Para que los documentos sean objetos simples
+    };
+
+    // Obtener productos con paginación
+    const result = await Product.paginate(filter, options);
+
+    res.json({
+      status: "success",
+      payload: result.docs,
+      totalDocs: result.totalDocs,
+      totalPages: result.totalPages,
+      page: result.page,
+      hasPrevPage: result.hasPrevPage,
+      hasNextPage: result.hasNextPage,
+      prevPage: result.prevPage,
+      nextPage: result.nextPage,
+    });
   } catch (error) {
     console.error("Error al obtener productos (API):", error);
     res.status(500).json({ error: "Error al obtener productos" });
@@ -68,14 +105,40 @@ export const deleteProduct = async (req, res) => {
     res.status(500).send("Error en el servidor");
   }
 };
-
-// 🔹 Vista: devuelve HTML usando Handlebars
+// ------------------COMIENZAN LAS VISTAS----------------------------------------
+//  Vista: devuelve HTML usando Handlebars
 export const getProductsView = async (req, res) => {
   try {
     const products = await Product.find().lean(); // lean() para que Handlebars lo entienda
-    res.render("home", { products });
+    let cart = await Cart.findOne();
+    if (!cart) {
+      cart = await Cart.create({ products: [] });
+    }
+
+    // Pasamos cartId a la vista
+    res.render("home", { products, cartId: cart._id });
   } catch (error) {
     console.error("Error al obtener productos (vista):", error);
     res.status(500).send("Error al obtener productos");
+  }
+};
+// Obtener detalles de un producto para la vista
+export const getProductDetail = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.pid).lean();
+    if (!product) {
+      return res.status(404).send("Producto no encontrado");
+    }
+
+    // Buscar o crear carrito
+    let cart = await Cart.findOne();
+    if (!cart) {
+      cart = await Cart.create({ products: [] });
+    }
+
+    res.render("productDetail", { product, cartId: cart._id });
+  } catch (error) {
+    console.error("Error al obtener detalle del producto:", error);
+    res.status(500).send("Error en el servidor");
   }
 };
