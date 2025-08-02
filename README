@@ -1,22 +1,20 @@
-# 🛒 Segunda Entrega - Backend con WebSockets y Handlebars
+🛒 Proyecto Backend con MongoDB y Handlebars
+📌 Descripción
+Aplicación backend construida con Node.js, Express, MongoDB y Handlebars, que permite:
 
-## 📌 Descripción
+Gestionar productos y carritos (alta, baja, modificación y consulta).
+Visualizar productos en una vista HTML renderizada con Handlebars.
+Consultar el detalle de un producto individual.
+Ver el detalle de un carrito y su total calculado.
 
-Este proyecto es una aplicación backend construida con **Node.js**, **Express**, **Handlebars** y **Socket.io**, que permite:
-
-- Gestionar productos y carritos (alta, baja, modificación, consulta).
-- Visualizar productos en tiempo real mediante una vista dinámica que se actualiza automáticamente con WebSockets.
-
----
-
-## 🚀 Tecnologías utilizadas
-
-- Node.js
-- Express
-- File System (persistencia en archivos)
-- Express Handlebars (motor de plantillas)
-- Socket.io (comunicación en tiempo real)
-- Postman (para pruebas de endpoints)
+🚀 Tecnologías utilizadas
+Node.js
+Express
+MongoDB Atlas
+Mongoose (ODM)
+Express Handlebars (motor de plantillas)
+Dotenv (manejo de variables de entorno)
+Postman (para pruebas de API)
 
 ---
 
@@ -24,62 +22,65 @@ Este proyecto es una aplicación backend construida con **Node.js**, **Express**
 
 src/
 ├── app.js
+├── controllers/
+│ ├── products.controller.js
+│ └── carts.controller.js
+├── models/
+│ ├── product.model.js
+│ └── cart.model.js
 ├── routes/
 │ ├── products.router.js
-│ └── carts.router.js
-├── managers/
-│ ├── productManager.js
-│ └── cartManager.js
+│ ├── carts.router.js
+│ └── views.router.js
 ├── views/
+│ ├── layouts/
+│ │ └── main.handlebars
 │ ├── home.handlebars
-│ ├── realTimeProducts.handlebars
-│ └── layouts/
-│ └── main.handlebars
-└── public/
-└── js/
-└── realTimeClient.js
-products.json
-carts.json
+│ ├── productDetail.handlebars
+│ └── cart.handlebars
+└── seed_example.js
+.env
+.gitignore
+package.json
+README.md
 
 ---
 
----
+🖥️ Vistas disponibles
+_`/home`
+Lista de productos con opción de agregar al carrito.
+Campo de búsqueda y orden por precio (ascendente/descendente).
+Enlace para ver el detalle de un producto.
 
-## 🖥️ Vistas disponibles
 
-### `/`
-🔸 Vista estática con listado de productos desde File System (home.handlebars)
+`/products/:pid`
+Detalle de un producto individual.
 
-### `/realtimeproducts`
-🔸 Vista dinámica que se actualiza automáticamente al agregar o eliminar productos mediante WebSocket (realTimeProducts.handlebars)
+`/cart/:cid`
+Detalle del carrito seleccionado.
 
-- Formulario para **agregar** productos (title, price)
-- Formulario para **eliminar** productos por ID
+Lista de productos, cantidades y precio total.
 
----
-
-## 🔌 Funcionalidades WebSocket
-
-- Cuando un usuario agrega un producto nuevo → todos los clientes conectados ven el cambio al instante.
-- Cuando un usuario elimina un producto por ID → se actualiza en tiempo real para todos los clientes.
-
----
 
 ## 📬 API REST (pruebas con Postman)
 
 ### Productos (`/api/products`)
 
-- `GET /` → Obtener todos los productos
+- `GET /` → Obtener todos los productos (acepta filtros, orden y límite)
 - `GET /:pid` → Obtener producto por ID
-- `POST /` → Agregar producto (requiere todos los campos)
+- `POST /` → Agregar producto (requiere campos obligatorios)
 - `PUT /:pid` → Modificar producto por ID
 - `DELETE /:pid` → Eliminar producto por ID
 
+
 ### Carritos (`/api/carts`)
 
-- `POST /` → Crear carrito
-- `GET /:cid` → Ver contenido del carrito
-- `POST /:cid/product/:pid` → Agregar producto al carrito
-
----
+- `POST /` → Crear un nuevo carrito
+- `GET /` → Obtener todos los carritos
+- `GET /:cid` → Obtener un carrito por ID
+- `POST /:cid/product/:pid` → Agregar un producto a un carrito
+- `PUT /:cid/products` → Actualizar el array completo de productos de un carrito
+- `PUT /:cid/products/:pid` → Actualizar la cantidad de un producto en un carrito
+- `DELETE /:cid/products/:pid` → Eliminar un producto de un carrito
+- `DELETE /:cid` → Vaciar un carrito
 

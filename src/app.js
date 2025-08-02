@@ -11,11 +11,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Conexión MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Conectado a MongoDB Atlas"))
-  .catch((err) => console.error("❌ Error de conexión a MongoDB", err));
 
+mongoose
+  .connect(
+    "mongodb+srv://coder_backEnd1:EntregaFinal2025@cluster0.4uoqex8.mongodb.net/backend_1"
+  )
+  .then(() => {
+    console.log("✅ Conectado a MongoDB Atlas");
+    app.listen(8080, () =>
+      console.log("🚀 Servidor escuchando en puerto 8080")
+    );
+  })
+  .catch((error) => console.error("❌ Error de conexión a MongoDB:", error));
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -30,7 +37,6 @@ app.set("views", path.join(__dirname, "views"));
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "../public")));
 
 // Rutas API
 app.use("/api/products", productsRouter);

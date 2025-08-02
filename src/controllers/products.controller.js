@@ -107,7 +107,7 @@ export const deleteProduct = async (req, res) => {
 };
 // ------------------COMIENZAN LAS VISTAS----------------------------------------
 //  Vista: devuelve HTML usando Handlebars
-export const getProductsView = async (req, res) => {
+/* export const getProductsView = async (req, res) => {
   try {
     const products = await Product.find().lean(); // lean() para que Handlebars lo entienda
     let cart = await Cart.findOne();
@@ -121,7 +121,54 @@ export const getProductsView = async (req, res) => {
     console.error("Error al obtener productos (vista):", error);
     res.status(500).send("Error al obtener productos");
   }
+}; */
+
+export const getProductsView = async (req, res) => {
+  try {
+    // Mismos parámetros que en el endpoint API
+    const { limit = 10, page = 1, sort, query } = req.query;
+
+    // Filtro
+    let filter = {};
+    if (query) {
+      const [field, value] = query.split(":");
+      if (!isNaN(value)) {
+        filter[field] = Number(value);
+      } else {
+        filter[field] = { $regex: value, $options: "i" };
+      }
+    }
+
+    // Opciones de paginación
+    const options = {
+      limit: parseInt(limit),
+      page: parseInt(page),
+      sort: sort ? { price: sort === "asc" ? 1 : -1 } : undefined,
+      lean: true,
+    };
+
+    // Ejecutar paginación
+    const result = await Product.paginate(filter, options);
+
+    // Buscar o crear carrito
+    let cart = await Cart.findOne();
+    if (!cart) cart = await Cart.create({ products: [] });
+
+    // Renderizar vista
+    res.render("home", {
+      products: result.docs,
+      cartId: cart._id,
+      limit,
+      page,
+      sort,
+      query,
+    });
+  } catch (error) {
+    console.error("Error al obtener productos (vista):", error);
+    res.status(500).send("Error al obtener productos");
+  }
 };
+
 // Obtener detalles de un producto para la vista
 export const getProductDetail = async (req, res) => {
   try {

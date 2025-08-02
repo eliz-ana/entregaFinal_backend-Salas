@@ -1,6 +1,27 @@
-
 <h1>Productos disponibles</h1>
 
+<!-- Formulario de filtrado -->
+<form method="GET" action="/home" style="margin-bottom: 20px;">
+  <!-- Buscar -->
+  <label for="query">Buscar:</label>
+  <input type="text" name="query" id="query" placeholder="title:camisa" />
+
+  <!-- Ordenar -->
+  <label for="sort">Ordenar por precio:</label>
+  <select name="sort" id="sort">
+    <option value="">-- Sin ordenar --</option>
+    <option value="asc">Ascendente</option>
+    <option value="desc">Descendente</option>
+  </select>
+
+  <!-- Límite -->
+  <label for="limit">Límite:</label>
+  <input type="number" name="limit" id="limit" min="1" value="10" />
+
+  <button type="submit">Filtrar</button>
+</form>
+
+<!-- Lista de productos -->
 <ul>
   {{#each products}}
     <li>
