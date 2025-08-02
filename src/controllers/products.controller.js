@@ -107,21 +107,6 @@ export const deleteProduct = async (req, res) => {
 };
 // ------------------COMIENZAN LAS VISTAS----------------------------------------
 //  Vista: devuelve HTML usando Handlebars
-/* export const getProductsView = async (req, res) => {
-  try {
-    const products = await Product.find().lean(); // lean() para que Handlebars lo entienda
-    let cart = await Cart.findOne();
-    if (!cart) {
-      cart = await Cart.create({ products: [] });
-    }
-
-    // Pasamos cartId a la vista
-    res.render("home", { products, cartId: cart._id });
-  } catch (error) {
-    console.error("Error al obtener productos (vista):", error);
-    res.status(500).send("Error al obtener productos");
-  }
-}; */
 
 export const getProductsView = async (req, res) => {
   try {
