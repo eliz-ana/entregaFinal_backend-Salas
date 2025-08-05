@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "66f954a0-325d-4f24-a6e0-5cb87bd43e6a",
+		"name": "entregaFinal_BackEnd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46134351"
+	},
+	"item": [
+		{
+			"name": "product request",
+			"item": [
+				{
+					"name": "ver todos los productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Notebook Dell Inspiron 15\",\r\n  \"description\": \"Notebook Dell Inspiron 15 con procesador Intel i7, 16GB RAM y SSD de 512GB\",\r\n  \"code\": \"DELLI715\",\r\n  \"price\": 1200,\r\n  \"status\": true,\r\n  \"stock\": 10,\r\n  \"category\": \"Computadoras\",\r\n  \"thumbnails\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver product por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/68921df2b9ca7720d7760937",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"68921df2b9ca7720d7760937"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/688a42cee12ed55ebf9dae26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"688a42cee12ed55ebf9dae26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"price\":548}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/688d04b952167ac795fbee51",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"688d04b952167ac795fbee51"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart request",
+			"item": [
+				{
+					"name": "crear cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener cart por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/688a42cfe12ed55ebf9dae28",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"688a42cfe12ed55ebf9dae28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener carts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar producto al cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/68921a19f37c7cdfa3572a55/product/688bf597d86b159a622fcd78",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"68921a19f37c7cdfa3572a55",
+								"product",
+								"688bf597d86b159a622fcd78"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar todos los productos del cart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    { \"product\": \"688bf597d86b159a622fcd78\", \"quantity\": 2 },\r\n    { \"product\": \"688bf597d86b159a622fcd7a\", \"quantity\": 1 }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/688c043074c847b2d7e094b1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"688c043074c847b2d7e094b1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar solo cantidad de un producto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"quantity\":3}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/688a42cfe12ed55ebf9dae28/products/688a42cee12ed55ebf9dae25",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"688a42cfe12ed55ebf9dae28",
+								"products",
+								"688a42cee12ed55ebf9dae25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar un solo producto del cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/688a42cfe12ed55ebf9dae28/products/688bf597d86b159a622fcd74",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"688a42cfe12ed55ebf9dae28",
+								"products",
+								"688bf597d86b159a622fcd74"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

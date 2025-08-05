@@ -3,7 +3,7 @@ import Cart from "../models/cart.model.js";
 
 // Obtener todos los productos
 // 🔹 API: devuelve JSON
-export const getProductsApi = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     // Query params con valores por defecto
     const { limit = 10, page = 1, sort, query } = req.query;
@@ -16,7 +16,6 @@ export const getProductsApi = async (req, res) => {
       if (!isNaN(value)) {
         filter[field] = Number(value);
       } else {
-        // Si es texto, usa regex insensible a mayúsculas/minúsculas
         filter[field] = { $regex: value, $options: "i" };
       }
     }
@@ -105,6 +104,7 @@ export const deleteProduct = async (req, res) => {
     res.status(500).send("Error en el servidor");
   }
 };
+
 // ------------------COMIENZAN LAS VISTAS----------------------------------------
 //  Vista: devuelve HTML usando Handlebars
 
