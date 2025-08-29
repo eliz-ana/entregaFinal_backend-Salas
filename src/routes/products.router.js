@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getProductsApi,
+  getProducts,
   getProductById,
   createProduct,
   updateProduct,
@@ -10,8 +10,7 @@ import {
 const router = Router();
 
 // Rutas de productos (MongoDB)
-router.get("/", getProductsApi);
-
+router.get("/", getProducts);
 router.get("/:pid", getProductById);
 router.post("/", createProduct);
 router.put("/:pid", updateProduct);

@@ -23,7 +23,8 @@ router.get("/:cid", getCartById);
 
 // Agregar un producto a un carrito
 router.post("/:cid/product/:pid", addProductToCart);
-// Actualizar productos de un carrito
+
+// Actualizar TODOS los productos de un carrito
 router.put("/:cid/products", updateCartProducts);
 
 // Actualizar la cantidad de un producto en un carrito
