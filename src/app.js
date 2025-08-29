@@ -9,22 +9,24 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config();
-
+const app = express();
+const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT || 8080;
 // Conexión MongoDB
 
-mongoose
-  .connect(
-    "mongodb+srv://coder_backEnd1:EntregaFinal2025@cluster0.4uoqex8.mongodb.net/backend_1"
-  )
-  .then(() => {
+async function start() {
+  try {
+    await mongoose.connect(MONGO_URI);
     console.log("✅ Conectado a MongoDB Atlas");
-    app.listen(8080, () =>
-      console.log("🚀 Servidor escuchando en puerto 8080")
-    );
-  })
-  .catch((error) => console.error("❌ Error de conexión a MongoDB:", error));
-const app = express();
-const PORT = process.env.PORT || 8080;
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Error de conexión a MongoDB:", err);
+    process.exit(1); // opcional: salir si no conecta
+  }
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,8 +50,4 @@ app.use("/", viewsRouter);
 app.get("/", (req, res) => {
   res.send("API de Productos y Carritos en funcionamiento");
 });
-
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
-});
+start();
